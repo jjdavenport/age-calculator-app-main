@@ -1,4 +1,40 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 #day,
 #month {
   width: 6ch;
+}
+
+.inputs {
+  display: flex;
+  gap: 1rem;
+}
+
+.day,
+.month,
+.year {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-empty {
+  border: 1px solid red;
+}
+
+.title-empty {
+  color: red;
+}
+
+.error-empty {
+  color: red;
 }
