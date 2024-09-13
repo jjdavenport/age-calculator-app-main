@@ -1,25 +1,16 @@
 import Input from "./input";
 
-const Form = ({ data }) => {
-  const submit = (e) => {
-    e.preventDefault;
-  };
-
+const Form = ({ data, onSubmit }) => {
   return (
-    <>
-      <form onSubmit={submit}>
+    <form onSubmit={onSubmit}>
+      <ul>
         {data.map((i, index) => (
-          <>
-            <Input
-              key={index}
-              placeholder={i.placeholder}
-              type={i.type}
-              label={i.label}
-            />
-          </>
+          <li key={index}>
+            <Input placeholder={i.placeholder} type={i.type} label={i.label} />
+          </li>
         ))}
-      </form>
-    </>
+      </ul>
+    </form>
   );
 };
 
