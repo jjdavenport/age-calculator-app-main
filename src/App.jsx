@@ -8,6 +8,9 @@ function App() {
     e.preventDefault();
     console.log("works");
   };
+
+  
+
   return (
     <>
       <Form data={data.inputs} onSubmit={submit} />

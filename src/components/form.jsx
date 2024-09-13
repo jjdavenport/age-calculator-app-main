@@ -3,7 +3,7 @@ import Input from "./input";
 const Form = ({ data, onSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
-      <ul>
+      <ul className="flex">
         {data.map((i, index) => (
           <li key={index}>
             <Input placeholder={i.placeholder} type={i.type} label={i.label} />
