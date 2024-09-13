@@ -1,0 +1,33 @@
+{
+  "inputs": [
+    {
+      "label": "Day",
+      "placeholder": "DD",
+      "type": "number"
+    },
+    {
+      "label": "Month",
+      "placeholder": "MM",
+      "type": "number"
+    },
+    {
+      "label": "Year",
+      "placeholder": "YYYY",
+      "type": "number"
+    }
+  ],
+  "outputs": [
+    {
+      "label": "days",
+      "default": "--"
+    },
+    {
+      "label": "months",
+      "default": "--"
+    },
+    {
+      "label": "years",
+      "default": "--"
+    }
+  ]
+}

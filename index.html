@@ -2,85 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- displays site properly based on user's device -->
-
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
       href="./assets/images/favicon-32x32.png"
     />
-    <link rel="stylesheet" href="./style.css" />
-    <script src="./main.js" defer></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Frontend Mentor | Age calculator app</title>
-
-    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-    <style>
-      .attribution {
-        font-size: 0.6875rem;
-        text-align: center;
-      }
-      .attribution a {
-        color: hsl(228, 45%, 44%);
-        text-decoration: none;
-      }
-    </style>
   </head>
   <body>
-    <main>
-      <div class="inputs">
-        <div class="day">
-          <p class="title">Day</p>
-          <input
-            class="input"
-            id="day"
-            type="number"
-            placeholder="DD"
-            min="1"
-            max="31"
-            maxlength="2"
-          />
-          <p class="empty"></p>
-        </div>
-        <div class="month">
-          <p class="title">Month</p>
-          <input
-            class="input"
-            id="month"
-            type="number"
-            placeholder="MM"
-            min="1"
-            max="12"
-            maxlength="2"
-          />
-          <p class="empty"></p>
-        </div>
-        <div class="year">
-          <p class="title">Year</p>
-          <input
-            class="input"
-            id="year"
-            type="number"
-            placeholder="YYYY"
-            maxlength="4"
-          />
-          <p class="empty"></p>
-        </div>
-      </div>
-      <button id="arrow-btn">
-        <img src="./assets/images/icon-arrow.svg" alt="arrow" />
-      </button>
-      <p id="years">-- years</p>
-      <p id="months">-- months</p>
-      <p id="days">-- days</p>
-    </main>
-    <div class="attribution">
-      Challenge by
-      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
-        >Frontend Mentor</a
-      >. Coded by <a href="https://github.com/jjdavenport">jjdavenport</a>.
-    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
