@@ -7,15 +7,27 @@ const Form = ({ onSubmit }) => {
 
   return (
     <form onSubmit={validateForm}>
-      <ul className="flex flex-row">
-        <li>
-          <Input label="Day" type="number" placeholder="00" />
+      <ul className="flex flex-row justify-between gap-4">
+        <li className="flex flex-col gap-2">
+          <Input
+            options={{ date: true, datePattern: ["d"] }}
+            label="Day"
+            placeholder="DD"
+          />
         </li>
-        <li>
-          <Input label="Month" type="number" placeholder="00" />
+        <li className="flex flex-col gap-2">
+          <Input
+            options={{ date: true, datePattern: ["m"] }}
+            label="Month"
+            placeholder="MM"
+          />
         </li>
-        <li>
-          <Input label="Year" type="number" placeholder="0000" />
+        <li className="flex flex-col gap-2">
+          <Input
+            options={{ date: true, datePattern: ["Y"] }}
+            label="Year"
+            placeholder="YYYY"
+          />
         </li>
       </ul>
     </form>

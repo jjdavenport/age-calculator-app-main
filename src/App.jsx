@@ -1,12 +1,11 @@
-import data from "./components/assets/data.json";
 import Form from "./components/form";
 import Output from "./components/output";
 import Button from "./components/button";
+import Footer from "./components/footer";
 
 function App() {
   const submit = (e) => {
     e.preventDefault();
-    console.log(day);
   };
 
   const date = new Date();
@@ -27,9 +26,16 @@ function App() {
 
   return (
     <>
-      <Form onSubmit={submit} />
-      <Button onClick={submit} />
-      <Output day={dayCalc} month={monthCalc} year={yearCalc} />
+      <div className="flex h-full min-h-screen flex-col items-center justify-center bg-offWhite font-custom text-custom font-normal">
+        <div className="flex flex-1 flex-col items-center justify-center p-4">
+          <main className="flex flex-col gap-16 rounded-t-3xl rounded-bl-3xl rounded-br-right bg-white px-4 py-10">
+            <Form onSubmit={submit} />
+            <Button onClick={submit} />
+            <Output day={dayCalc} month={monthCalc} year={yearCalc} />
+          </main>
+        </div>
+        <Footer />
+      </div>
     </>
   );
 }
