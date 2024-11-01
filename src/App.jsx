@@ -6,16 +6,30 @@ import Button from "./components/button";
 function App() {
   const submit = (e) => {
     e.preventDefault();
-    console.log("works");
+    console.log(day);
   };
 
-  
+  const date = new Date();
+  const month = date.getMonth();
+  const day = date.getDay();
+
+  const dayCalc = () => {
+    return "--";
+  };
+
+  const monthCalc = () => {
+    return "--";
+  };
+
+  const yearCalc = () => {
+    return "--";
+  };
 
   return (
     <>
-      <Form data={data.inputs} onSubmit={submit} />
+      <Form onSubmit={submit} />
       <Button onClick={submit} />
-      <Output data={data.outputs} />
+      <Output day={dayCalc} month={monthCalc} year={yearCalc} />
     </>
   );
 }

@@ -1,14 +1,22 @@
 import Input from "./input";
 
-const Form = ({ data, onSubmit }) => {
+const Form = ({ onSubmit }) => {
+  const validateForm = () => {
+    onSubmit();
+  };
+
   return (
-    <form onSubmit={onSubmit}>
-      <ul className="flex">
-        {data.map((i, index) => (
-          <li key={index}>
-            <Input placeholder={i.placeholder} type={i.type} label={i.label} />
-          </li>
-        ))}
+    <form onSubmit={validateForm}>
+      <ul className="flex flex-row">
+        <li>
+          <Input label="Day" type="number" placeholder="00" />
+        </li>
+        <li>
+          <Input label="Month" type="number" placeholder="00" />
+        </li>
+        <li>
+          <Input label="Year" type="number" placeholder="0000" />
+        </li>
       </ul>
     </form>
   );

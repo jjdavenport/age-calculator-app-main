@@ -1,13 +1,10 @@
-const Output = ({ data }) => {
+const Output = ({ day, month, year }) => {
   return (
     <>
       <ul>
-        {data.map((i, index) => (
-          <li key={index}>
-            <span>{i.label}</span>
-            <span>{i.default}</span>
-          </li>
-        ))}
+        <li>{day()}</li>
+        <li>{month()}</li>
+        <li>{year()}</li>
       </ul>
     </>
   );

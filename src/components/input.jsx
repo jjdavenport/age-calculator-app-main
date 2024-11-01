@@ -14,6 +14,13 @@ const Input = ({ type, placeholder, label }) => {
       setError("Must be a valid month");
     } else if (placeholder === "YYYY" && input > year) {
       setError("Must be in the past");
+    } else if (
+      (placeholder === "DD" && input.length < 2) ||
+      (placeholder === "MM" && input.length < 2)
+    ) {
+      setError("must be two digits");
+    } else if (placeholder === "YYYY" && input.length < 4) {
+      setError("Must be four digits");
     } else {
       setError("");
     }
