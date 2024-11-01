@@ -7,7 +7,7 @@ const Form = ({ onSubmit }) => {
 
   return (
     <form onSubmit={validateForm}>
-      <ul className="flex flex-row justify-between gap-4">
+      <ul className="flex flex-row justify-between ~sm/md:~gap-4/8 md:w-10/12">
         <li className="flex flex-col gap-2">
           <Input
             options={{ date: true, datePattern: ["d"] }}

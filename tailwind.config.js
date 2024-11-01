@@ -20,12 +20,14 @@ export default {
       },
       fontSize: {
         custom: "2rem",
+        mobile: "0.5rem",
       },
       fontFamily: {
         custom: ["poppins", "sans-serif"],
       },
       borderRadius: {
-        right: "6rem",
+        mobile: "6rem",
+        desktop: "14rem",
       },
     },
   },

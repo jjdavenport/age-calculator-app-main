@@ -31,21 +31,25 @@ const Input = ({ placeholder, label, options }) => {
 
   return (
     <>
-      <label className="flex flex-col gap-1 font-bold uppercase tracking-widest text-smokeyGrey ~text-sm/base">
+      <label
+        className={`${error ? "text-lightRed" : "text-smokeyGrey"} flex flex-col font-bold uppercase tracking-[0.2em] transition-colors duration-300 ease-in-out ~sm/md:~text-sm/lg ~sm/md:~gap-1/2`}
+      >
         {label}
         <Cleave
-          className="flex w-full cursor-pointer rounded-md p-2 text-xl text-offBlack outline outline-1 outline-lightGrey duration-300 ease-in-out placeholder:text-smokeyGrey focus:outline-purple"
+          className={` ${error ? "outline-lightRed" : "outline-lightGrey focus:outline-purple"} flex w-full cursor-pointer rounded-md text-offBlack outline outline-1 duration-300 ease-in-out placeholder:text-smokeyGrey ~sm/md:~text-xl/custom ~sm/md:~px-2/5 ~sm/md:~py-2/3`}
           onBlur={validate}
           onChange={(e) => setInput(e.target.rawValue)}
           placeholder={placeholder}
           options={options}
         />
       </label>
-      {error && (
-        <em className="font-normal lowercase tracking-normal text-lightRed ~text-xs/sm">
-          {error}
-        </em>
-      )}
+      <em
+        className={
+          "~sm/md:~text-mobile/base h-1 font-normal normal-case tracking-normal text-lightRed transition-colors duration-300 ease-in-out"
+        }
+      >
+        {error}
+      </em>
     </>
   );
 };
