@@ -1,5 +1,5 @@
 import arrow from "../assets/icon-arrow.svg";
-import { useState, type SetStateAction } from "react";
+import { useState } from "react";
 
 export const Button = () => {
   return (
@@ -43,8 +43,9 @@ export const Footer = () => {
 export const Form = ({
   setResults,
 }: {
-  onSubmit: () => void;
-  setResults: React.Dispatch<SetStateAction>;
+  setResults: React.Dispatch<
+    React.SetStateAction<{ days: string; months: string; years: string }>
+  >;
 }) => {
   const [values, setValues] = useState({
     day: "",
@@ -65,13 +66,13 @@ export const Form = ({
 
     console.log(year);
 
-    const error = {};
+    const error: Partial<{ day: string; month: string; year: string }> = {};
 
     if (values.day === "") {
       error.day = "Cannot be empty";
     } else if (values.day.length > 2) {
       error.day = "Must be one or two digits";
-    } else if (values.day < 1 || values.day > 31) {
+    } else if (+values.day < 1 || +values.day > 31) {
       error.day = "Must be a number between one and thirty one";
     } else if (!values.day.match(/^\d+$/)) {
       error.day = "Must be a number";
@@ -81,7 +82,7 @@ export const Form = ({
       error.month = "Cannot be empty";
     } else if (values.month.length > 2) {
       error.month = "Must be one or two digits";
-    } else if (values.month < 1 || values.month > 12) {
+    } else if (+values.month < 1 || +values.month > 12) {
       error.month = "Must be a number between one and twelve";
     } else if (!values.month.match(/^\d+$/)) {
       error.month = "Must be a number";
@@ -91,7 +92,7 @@ export const Form = ({
       error.year = "Cannot be empty";
     } else if (values.year.length > 4) {
       error.year = "Must be four digits";
-    } else if (values.year > year) {
+    } else if (+values.year > year) {
       error.year = "Must be this year or previous years";
     } else if (!values.year.match(/^\d+$/)) {
       errors.year = "Must be a number";
@@ -101,6 +102,10 @@ export const Form = ({
       setErrors((prev) => ({ ...prev, ...error }));
       return;
     }
+
+    setErrors({ day: "", month: "", year: "" });
+
+    setResults({ days: "", months: "", years: "" });
   };
 
   return (
@@ -169,9 +174,9 @@ export const Input = ({
   placeholder: string;
   label: string;
   value: string;
-  onChange: React.ChangeEvent<HTMLInputElement>;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error: string;
-  setError: React.Dispatch<SetStateAction<string>>;
+  setError: (value: string) => void;
 }) => {
   const validate = () => {
     const year = new Date().getFullYear();
@@ -225,30 +230,30 @@ export const Input = ({
 };
 
 export const Output = ({
-  day,
-  month,
-  year,
+  days,
+  months,
+  years,
 }: {
-  day: string;
-  month: string;
-  year: string;
+  days: string;
+  months: string;
+  years: string;
 }) => {
   return (
     <>
       <ul className="flex flex-col gap-4 font-extrabold">
         <li className="text-purple">
           <em>
-            {year} <span className="text-offBlack">years </span>
+            {years} <span className="text-offBlack">years </span>
           </em>
         </li>
         <li className="text-purple">
           <em>
-            {month} <span className="text-offBlack">months</span>
+            {months} <span className="text-offBlack">months</span>
           </em>
         </li>
         <li className="text-purple">
           <em>
-            {day} <span className="text-offBlack">days</span>
+            {days} <span className="text-offBlack">days</span>
           </em>
         </li>
       </ul>

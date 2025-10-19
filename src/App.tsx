@@ -3,9 +3,9 @@ import { Form, Output, Footer } from "./components/content";
 
 function App() {
   const [results, setResults] = useState({
-    day: "--",
-    month: "--",
-    year: "--",
+    days: "--",
+    months: "--",
+    years: "--",
   });
   return (
     <>
@@ -14,9 +14,9 @@ function App() {
           <main className="flex max-w-screen-md flex-col gap-16 rounded-t-3xl rounded-bl-3xl bg-white p-4">
             <Form setResults={setResults} />
             <Output
-              day={results.day}
-              month={results.month}
-              year={results.year}
+              days={results.days}
+              months={results.months}
+              years={results.years}
             />
           </main>
         </div>
