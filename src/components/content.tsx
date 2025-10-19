@@ -1,7 +1,7 @@
 import arrow from "../assets/icon-arrow.svg";
 import { useState } from "react";
 
-export const Button = ({ onClick }) => {
+export const Button = ({ onClick }: { onClick: () => void }) => {
   return (
     <>
       <section className="relative flex w-full justify-center md:justify-end">
@@ -42,8 +42,9 @@ export const Footer = () => {
   );
 };
 
-export const Form = ({ onSubmit }) => {
-  const validateForm = () => {
+export const Form = ({ onSubmit }: { onSubmit: () => void }) => {
+  const validateForm = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     onSubmit();
   };
 
@@ -51,32 +52,26 @@ export const Form = ({ onSubmit }) => {
     <form onSubmit={validateForm}>
       <ul className="flex flex-row justify-between md:w-10/12">
         <li className="flex flex-col gap-2">
-          <Input
-            options={{ date: true, datePattern: ["d"] }}
-            label="Day"
-            placeholder="DD"
-          />
+          <Input label="Day" placeholder="DD" />
         </li>
         <li className="flex flex-col gap-2">
-          <Input
-            options={{ date: true, datePattern: ["m"] }}
-            label="Month"
-            placeholder="MM"
-          />
+          <Input label="Month" placeholder="MM" />
         </li>
         <li className="flex flex-col gap-2">
-          <Input
-            options={{ date: true, datePattern: ["Y"] }}
-            label="Year"
-            placeholder="YYYY"
-          />
+          <Input label="Year" placeholder="YYYY" />
         </li>
       </ul>
     </form>
   );
 };
 
-export const Input = ({ placeholder, label, options }) => {
+export const Input = ({
+  placeholder,
+  label,
+}: {
+  placeholder: string;
+  label: string;
+}) => {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
 
@@ -113,9 +108,8 @@ export const Input = ({ placeholder, label, options }) => {
         <input
           className={` ${error ? "outline-lightRed" : "outline-lightGrey focus:outline-purple"} text-offBlack placeholder:text-smokeyGrey flex w-full cursor-pointer rounded-md outline-1 duration-300 ease-in-out`}
           onBlur={validate}
-          onChange={(e) => setInput(e.target.rawValue)}
+          onChange={(e) => setInput(e.target.value)}
           placeholder={placeholder}
-          options={options}
         />
       </label>
       <em
@@ -129,23 +123,31 @@ export const Input = ({ placeholder, label, options }) => {
   );
 };
 
-export const Output = ({ day, month, year }) => {
+export const Output = ({
+  day,
+  month,
+  year,
+}: {
+  day: string;
+  month: string;
+  year: string;
+}) => {
   return (
     <>
       <ul className="flex flex-col gap-4 font-extrabold">
         <li className="text-purple">
           <em>
-            {year()} <span className="text-offBlack">years </span>
+            {year} <span className="text-offBlack">years </span>
           </em>
         </li>
         <li className="text-purple">
           <em>
-            {month()} <span className="text-offBlack">months</span>
+            {month} <span className="text-offBlack">months</span>
           </em>
         </li>
         <li className="text-purple">
           <em>
-            {day()} <span className="text-offBlack">days</span>
+            {day} <span className="text-offBlack">days</span>
           </em>
         </li>
       </ul>

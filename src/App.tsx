@@ -1,25 +1,15 @@
+import { useState } from "react";
 import { Form, Output, Button, Footer } from "./components/content";
 
 function App() {
-  const submit = (e) => {
-    e.preventDefault();
-  };
+  const [values, setValues] = useState({
+    day: "--",
+    month: "--",
+    year: "--",
+  });
+  const submit = () => {};
 
   const date = new Date();
-  const month = date.getMonth();
-  const day = date.getDay();
-
-  const dayCalc = () => {
-    return "--";
-  };
-
-  const monthCalc = () => {
-    return "--";
-  };
-
-  const yearCalc = () => {
-    return "--";
-  };
 
   return (
     <>
@@ -28,7 +18,7 @@ function App() {
           <main className="flex max-w-screen-md flex-col gap-16 rounded-t-3xl rounded-bl-3xl bg-white">
             <Form onSubmit={submit} />
             <Button onClick={submit} />
-            <Output day={dayCalc} month={monthCalc} year={yearCalc} />
+            <Output day={values.day} month={values.month} year={values.year} />
           </main>
         </div>
         <Footer />
