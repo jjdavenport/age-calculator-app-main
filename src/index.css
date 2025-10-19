@@ -3,16 +3,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-purple: "hsl(259, 100%, 65%)";
-  --color-lightRed: "hsl(0, 100%, 67%)";
-  --color-white: "hsl(0, 0%, 100%)";
-  --color-offWhite: "hsl(0, 0%, 94%)";
-  --color-lightGrey: "hsl(0, 0%, 86%)";
-  --color-smokeyGrey: "hsl(0, 1%, 44%)";
-  --color-offBlack: "hsl(0, 0%, 8%)";
-  --text-custom: "2rem";
-  --font-mobile: "0.5rem";
-  --font-custom: [ "poppins", "sans-serif"];
-  --border-mobile: "6rem";
-  --border-desktop: "14rem";
+  --color-purple: hsl(259, 100%, 65%);
+  --color-lightRed: hsl(0, 100%, 67%);
+  --color-white: hsl(0, 0%, 100%);
+  --color-offWhite: hsl(0, 0%, 94%);
+  --color-lightGrey: hsl(0, 0%, 86%);
+  --color-smokeyGrey: hsl(0, 1%, 44%);
+  --color-offBlack: hsl(0, 0%, 8%);
+  --text-custom: 2rem;
+  --font-mobile: 0.5rem;
+  --font-custom: poppins, sans-serif;
+  --border-mobile: 6rem;
+  --border-desktop: 14rem;
 }
