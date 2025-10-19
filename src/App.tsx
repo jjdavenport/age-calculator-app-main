@@ -1,7 +1,4 @@
-import Form from "./components/form";
-import Output from "./components/output";
-import Button from "./components/button";
-import Footer from "./components/footer";
+import { Form, Output, Button, Footer } from "./components/content";
 
 function App() {
   const submit = (e) => {
@@ -26,9 +23,9 @@ function App() {
 
   return (
     <>
-      <div className="flex h-full min-h-screen flex-col items-center justify-center bg-offWhite font-custom text-custom font-normal">
+      <div className="bg-offWhite font-custom text-custom flex h-full min-h-screen flex-col items-center justify-center font-normal">
         <div className="flex flex-1 flex-col items-center justify-center p-4">
-          <main className="~sm/md:~rounded-br-mobile/desktop flex max-w-screen-md flex-col gap-16 rounded-t-3xl rounded-bl-3xl bg-white ~sm/md:~px-4/12 ~sm/md:~py-10/14">
+          <main className="flex max-w-screen-md flex-col gap-16 rounded-t-3xl rounded-bl-3xl bg-white">
             <Form onSubmit={submit} />
             <Button onClick={submit} />
             <Output day={dayCalc} month={monthCalc} year={yearCalc} />
