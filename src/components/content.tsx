@@ -64,10 +64,6 @@ const Form = ({
     year: "",
   });
 
-  useEffect(() => {
-    console.log(values);
-  }, [values]);
-
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -95,8 +91,6 @@ const Form = ({
     const months = Math.abs(addYears / 30).toFixed(0);
     const days = Math.abs(addYears % 30).toFixed(0);
 
-    console.log(endDays);
-
     const error: Partial<{ day: string; month: string; year: string }> = {};
 
     if (values.day === "") {
@@ -107,8 +101,6 @@ const Form = ({
       error.day = "Must be a valid day";
     } else if (!values.day.match(/^\d+$/)) {
       error.day = "Must be a number";
-    } else if (parseInt(values.day) > date.getDate()) {
-      error.day = "Must be in the past";
     }
 
     if (values.month === "") {
@@ -119,8 +111,6 @@ const Form = ({
       error.month = "Must be a valid month";
     } else if (!values.month.match(/^\d+$/)) {
       error.month = "Must be a number";
-    } else if (parseInt(values.month) > date.getMonth() + 1) {
-      error.month = "Must be in the past";
     }
 
     if (values.year === "") {
@@ -131,7 +121,18 @@ const Form = ({
       error.year = "Must be in the past";
     } else if (!values.year.match(/^\d+$/)) {
       error.year = "Must be a number";
-    } else if (parseInt(values.year) > date.getFullYear()) {
+    }
+
+    if (+values.year === year) {
+      if (+values.month > date.getMonth() + 1) {
+        error.month = "Must be in the past";
+      } else if (
+        +values.month === date.getMonth() + 1 &&
+        +values.day > date.getDate()
+      ) {
+        error.day = "Must be in the past";
+      }
+    } else if (+values.year > year) {
       error.year = "Must be in the past";
     }
 
