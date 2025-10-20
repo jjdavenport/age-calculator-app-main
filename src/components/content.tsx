@@ -12,10 +12,10 @@ const Button = () => {
       <div className="relative w-full">
         <button
           type="submit"
-          className="group bg-purple absolute -bottom-8 left-1/2 w-fit -translate-x-1/2 cursor-pointer overflow-hidden rounded-full p-4 transition-transform duration-300 md:right-0 md:left-auto md:translate-x-0"
+          className="group bg-purple absolute -bottom-8 left-1/2 w-fit -translate-x-1/2 cursor-pointer overflow-hidden rounded-full p-4 transition-transform duration-300 md:right-0 md:-bottom-12 md:left-auto md:translate-x-0 md:p-6"
         >
           <div className="absolute inset-0 z-0 rounded-full bg-black opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100" />
-          <img className="relative w-7 object-contain" src={arrow} />
+          <img className="relative w-7 object-contain md:w-12" src={arrow} />
         </button>
       </div>
     </div>
@@ -71,12 +71,12 @@ const Form = ({
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const startValue = `${values.year}-${values.month}-${values.day}`;
+    const startValue = `${values.year}-${values.month.toString().padStart(2, "0")}-${values.day.toString().padStart(2, "0")}`;
 
     const date = new Date();
 
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
 
     const endValue = `${year}-${month}-${day}`;
@@ -95,7 +95,7 @@ const Form = ({
     const months = Math.abs(addYears / 30).toFixed(0);
     const days = Math.abs(addYears % 30).toFixed(0);
 
-    console.log(days);
+    console.log(endDays);
 
     const error: Partial<{ day: string; month: string; year: string }> = {};
 
@@ -104,9 +104,11 @@ const Form = ({
     } else if (values.day.length > 2) {
       error.day = "Must be one or two digits";
     } else if (+values.day < 1 || +values.day > 31) {
-      error.day = "Must be a number between one and thirty one";
+      error.day = "Must be a valid day";
     } else if (!values.day.match(/^\d+$/)) {
       error.day = "Must be a number";
+    } else if (parseInt(values.day) > date.getDate()) {
+      error.day = "Must be in the past";
     }
 
     if (values.month === "") {
@@ -114,9 +116,11 @@ const Form = ({
     } else if (values.month.length > 2) {
       error.month = "Must be one or two digits";
     } else if (+values.month < 1 || +values.month > 12) {
-      error.month = "Must be a number between one and twelve";
+      error.month = "Must be a valid month";
     } else if (!values.month.match(/^\d+$/)) {
       error.month = "Must be a number";
+    } else if (parseInt(values.month) > date.getMonth() + 1) {
+      error.month = "Must be in the past";
     }
 
     if (values.year === "") {
@@ -124,9 +128,11 @@ const Form = ({
     } else if (values.year.length > 4) {
       error.year = "Must be four digits";
     } else if (+values.year > year) {
-      error.year = "Must be this year or previous years";
+      error.year = "Must be in the past";
     } else if (!values.year.match(/^\d+$/)) {
-      errors.year = "Must be a number";
+      error.year = "Must be a number";
+    } else if (parseInt(values.year) > date.getFullYear()) {
+      error.year = "Must be in the past";
     }
 
     if (Object.keys(error).length > 0) {
@@ -146,48 +152,42 @@ const Form = ({
       onSubmit={onSubmit}
     >
       <ul className="flex flex-row justify-between gap-5 md:w-10/12">
-        <li className="flex flex-col gap-1">
-          <Input
-            onChange={(e) =>
-              setValues((prev) => ({ ...prev, day: e.target.value }))
-            }
-            setError={(value: string) =>
-              setErrors((prev) => ({ ...prev, day: value }))
-            }
-            error={errors.day}
-            value={values.day}
-            label="Day"
-            placeholder="DD"
-          />
-        </li>
-        <li className="flex flex-col gap-1">
-          <Input
-            onChange={(e) =>
-              setValues((prev) => ({ ...prev, month: e.target.value }))
-            }
-            setError={(value: string) =>
-              setErrors((prev) => ({ ...prev, month: value }))
-            }
-            error={errors.month}
-            value={values.month}
-            label="Month"
-            placeholder="MM"
-          />
-        </li>
-        <li className="flex flex-col gap-1">
-          <Input
-            onChange={(e) =>
-              setValues((prev) => ({ ...prev, year: e.target.value }))
-            }
-            setError={(value: string) =>
-              setErrors((prev) => ({ ...prev, year: value }))
-            }
-            error={errors.year}
-            value={values.year}
-            label="Year"
-            placeholder="YYYY"
-          />
-        </li>
+        <Input
+          onChange={(e) =>
+            setValues((prev) => ({ ...prev, day: e.target.value }))
+          }
+          setError={(value: string) =>
+            setErrors((prev) => ({ ...prev, day: value }))
+          }
+          error={errors.day}
+          value={values.day}
+          label="Day"
+          placeholder="DD"
+        />
+        <Input
+          onChange={(e) =>
+            setValues((prev) => ({ ...prev, month: e.target.value }))
+          }
+          setError={(value: string) =>
+            setErrors((prev) => ({ ...prev, month: value }))
+          }
+          error={errors.month}
+          value={values.month}
+          label="Month"
+          placeholder="MM"
+        />
+        <Input
+          onChange={(e) =>
+            setValues((prev) => ({ ...prev, year: e.target.value }))
+          }
+          setError={(value: string) =>
+            setErrors((prev) => ({ ...prev, year: value }))
+          }
+          error={errors.year}
+          value={values.year}
+          label="Year"
+          placeholder="YYYY"
+        />
       </ul>
       <Button />
     </form>
@@ -223,9 +223,9 @@ const Input = ({
       setError("Must be in the past");
     } else if (
       (placeholder === "DD" || placeholder === "MM") &&
-      value.length < 2
+      value.length > 2
     ) {
-      setError("Must be two digits");
+      setError("Must be two digits or less");
     } else if (placeholder === "YYYY" && value.length < 4) {
       setError("Must be four digits");
     } else if (!value.match(/^\d+$/)) {
@@ -237,25 +237,27 @@ const Input = ({
 
   return (
     <>
-      <label
-        className={`${error !== "" ? "text-lightRed" : "text-smokeyGrey"} flex flex-col text-sm font-bold tracking-[0.2em] uppercase transition-colors duration-300 ease-in-out`}
-      >
-        {label}
-      </label>
-      <input
-        value={value}
-        className={` ${error !== "" ? "outline-lightRed" : "outline-lightGrey focus:outline-purple"} text-offBlack placeholder:text-smokeyGrey flex w-full cursor-pointer rounded-md p-3 text-lg font-extrabold outline-1 duration-300 ease-in-out`}
-        onBlur={validate}
-        onChange={onChange}
-        placeholder={placeholder}
-      />
-      <em
-        className={
-          "text-lightRed h-1 text-xs font-normal tracking-normal normal-case transition-colors duration-300 ease-in-out"
-        }
-      >
-        {error}
-      </em>
+      <li className="flex flex-col gap-1 md:gap-2">
+        <label
+          className={`${error !== "" ? "text-lightRed" : "text-smokeyGrey"} flex flex-col text-sm font-bold tracking-[0.2em] uppercase transition-colors duration-300 ease-in-out`}
+        >
+          {label}
+        </label>
+        <input
+          value={value}
+          className={` ${error !== "" ? "outline-lightRed" : "outline-lightGrey focus:outline-purple"} text-offBlack placeholder:text-smokeyGrey md:text-custom flex w-full cursor-pointer rounded-md p-3 text-lg font-extrabold outline-1 duration-300 ease-in-out`}
+          onBlur={validate}
+          onChange={onChange}
+          placeholder={placeholder}
+        />
+        <em
+          className={
+            "text-lightRed h-1 text-xs font-normal tracking-normal normal-case transition-colors duration-300 ease-in-out"
+          }
+        >
+          {error}
+        </em>
+      </li>
     </>
   );
 };
@@ -271,7 +273,7 @@ const Output = ({
 }) => {
   return (
     <>
-      <ul className="flex h-[18rem] flex-col justify-center text-[3rem] leading-tight font-extrabold">
+      <ul className="flex h-[18rem] flex-col justify-center text-[3rem] leading-tight font-extrabold md:h-96 md:text-[5rem]">
         <li className="text-purple">
           <em>
             {years} <span className="text-offBlack">years </span>
@@ -328,7 +330,7 @@ export const Wrapper = ({ children }: { children: ReactNode }) => {
 export const Container = ({ children }: { children: ReactNode }) => {
   return (
     <>
-      <div className="flex flex-1 flex-col items-center justify-center p-4">
+      <div className="flex flex-1 flex-col items-center justify-center p-4 lg:px-0 lg:py-4">
         {children}
       </div>
     </>
