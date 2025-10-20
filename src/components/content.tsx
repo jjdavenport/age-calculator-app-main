@@ -1,5 +1,10 @@
 import arrow from "../assets/icon-arrow.svg";
-import { useState, type ReactNode, type SetStateAction } from "react";
+import {
+  useEffect,
+  useState,
+  type ReactNode,
+  type SetStateAction,
+} from "react";
 
 const Button = () => {
   return (
@@ -59,13 +64,38 @@ const Form = ({
     year: "",
   });
 
+  useEffect(() => {
+    console.log(values);
+  }, [values]);
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const startValue = `${values.year}-${values.month}-${values.day}`;
+
     const date = new Date();
+
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
     const year = date.getFullYear();
 
-    console.log(year);
+    const endValue = `${year}-${month}-${day}`;
+
+    const startDays = new Date(startValue);
+    const endDays = new Date(endValue);
+
+    const diff = startDays.getTime() - endDays.getTime();
+
+    const milliseconds = 1000 * 60 * 60 * 24;
+
+    const result = Math.round(diff / milliseconds);
+
+    const years = Math.abs(result / 365).toFixed(0);
+    const addYears = result % 365;
+    const months = Math.abs(addYears / 30).toFixed(0);
+    const days = Math.abs(addYears % 30).toFixed(0);
+
+    console.log(days);
 
     const error: Partial<{ day: string; month: string; year: string }> = {};
 
@@ -106,7 +136,7 @@ const Form = ({
 
     setErrors({ day: "", month: "", year: "" });
 
-    setResults({ days: "", months: "", years: "" });
+    setResults({ days: days, months: months, years: years });
   };
 
   return (
