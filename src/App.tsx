@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Output, Footer } from "./components/content";
+import { Main, Footer, Wrapper, Container } from "./components/content";
 
 function App() {
   const [results, setResults] = useState({
@@ -9,19 +9,12 @@ function App() {
   });
   return (
     <>
-      <div className="bg-offWhite font-custom text-custom flex h-full min-h-screen flex-col items-center justify-center font-normal">
-        <div className="flex flex-1 flex-col items-center justify-center p-4">
-          <main className="flex max-w-screen-md flex-col gap-16 rounded-t-3xl rounded-bl-3xl bg-white p-4">
-            <Form setResults={setResults} />
-            <Output
-              days={results.days}
-              months={results.months}
-              years={results.years}
-            />
-          </main>
-        </div>
+      <Wrapper>
+        <Container>
+          <Main results={results} setResults={setResults} />
+        </Container>
         <Footer />
-      </div>
+      </Wrapper>
     </>
   );
 }

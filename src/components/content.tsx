@@ -1,18 +1,19 @@
 import arrow from "../assets/icon-arrow.svg";
-import { useState } from "react";
+import { useState, type ReactNode, type SetStateAction } from "react";
 
-export const Button = () => {
+const Button = () => {
   return (
-    <>
-      <section className="absolute bottom-4 flex w-full translate-y-1/2 justify-center md:justify-end">
+    <div className="absolute bottom-0 w-full">
+      <div className="relative w-full">
         <button
-          className="bg-purple absolute w-fit rounded-full transition-colors duration-300 ease-in-out hover:bg-black"
           type="submit"
+          className="group bg-purple absolute -bottom-8 left-1/2 w-fit -translate-x-1/2 cursor-pointer overflow-hidden rounded-full p-4 transition-transform duration-300 md:right-0 md:left-auto md:translate-x-0"
         >
-          <img className="~sm/md:~w-8/10 object-contain" src={arrow} />
+          <div className="absolute inset-0 z-0 rounded-full bg-black opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100" />
+          <img className="relative w-7 object-contain" src={arrow} />
         </button>
-      </section>
-    </>
+      </div>
+    </div>
   );
 };
 
@@ -40,7 +41,7 @@ export const Footer = () => {
   );
 };
 
-export const Form = ({
+const Form = ({
   setResults,
 }: {
   setResults: React.Dispatch<
@@ -110,12 +111,12 @@ export const Form = ({
 
   return (
     <form
-      className="border-b-lightGrey relative h-96 border-b"
+      className="border-b-lightGrey relative flex h-52 flex-col justify-center border-b"
       noValidate
       onSubmit={onSubmit}
     >
-      <ul className="flex flex-row justify-between md:w-10/12">
-        <li className="flex flex-col gap-2">
+      <ul className="flex flex-row justify-between gap-5 md:w-10/12">
+        <li className="flex flex-col gap-1">
           <Input
             onChange={(e) =>
               setValues((prev) => ({ ...prev, day: e.target.value }))
@@ -129,7 +130,7 @@ export const Form = ({
             placeholder="DD"
           />
         </li>
-        <li className="flex flex-col gap-2">
+        <li className="flex flex-col gap-1">
           <Input
             onChange={(e) =>
               setValues((prev) => ({ ...prev, month: e.target.value }))
@@ -143,7 +144,7 @@ export const Form = ({
             placeholder="MM"
           />
         </li>
-        <li className="flex flex-col gap-2">
+        <li className="flex flex-col gap-1">
           <Input
             onChange={(e) =>
               setValues((prev) => ({ ...prev, year: e.target.value }))
@@ -163,7 +164,7 @@ export const Form = ({
   );
 };
 
-export const Input = ({
+const Input = ({
   placeholder,
   label,
   value,
@@ -207,20 +208,20 @@ export const Input = ({
   return (
     <>
       <label
-        className={`${error !== "" ? "text-lightRed" : "text-smokeyGrey"} ~sm/md:~text-sm/lg ~sm/md:~gap-1/2 flex flex-col font-bold tracking-[0.2em] uppercase transition-colors duration-300 ease-in-out`}
+        className={`${error !== "" ? "text-lightRed" : "text-smokeyGrey"} flex flex-col text-sm font-bold tracking-[0.2em] uppercase transition-colors duration-300 ease-in-out`}
       >
         {label}
-        <input
-          value={value}
-          className={` ${error !== "" ? "outline-lightRed" : "outline-lightGrey focus:outline-purple"} text-offBlack placeholder:text-smokeyGrey flex w-full cursor-pointer rounded-md outline-1 duration-300 ease-in-out`}
-          onBlur={validate}
-          onChange={onChange}
-          placeholder={placeholder}
-        />
       </label>
+      <input
+        value={value}
+        className={` ${error !== "" ? "outline-lightRed" : "outline-lightGrey focus:outline-purple"} text-offBlack placeholder:text-smokeyGrey flex w-full cursor-pointer rounded-md p-3 text-lg font-extrabold outline-1 duration-300 ease-in-out`}
+        onBlur={validate}
+        onChange={onChange}
+        placeholder={placeholder}
+      />
       <em
         className={
-          "text-lightRed h-1 font-normal tracking-normal normal-case transition-colors duration-300 ease-in-out"
+          "text-lightRed h-1 text-xs font-normal tracking-normal normal-case transition-colors duration-300 ease-in-out"
         }
       >
         {error}
@@ -229,7 +230,7 @@ export const Input = ({
   );
 };
 
-export const Output = ({
+const Output = ({
   days,
   months,
   years,
@@ -240,7 +241,7 @@ export const Output = ({
 }) => {
   return (
     <>
-      <ul className="flex flex-col gap-4 font-extrabold">
+      <ul className="flex h-[18rem] flex-col justify-center text-[3rem] leading-tight font-extrabold">
         <li className="text-purple">
           <em>
             {years} <span className="text-offBlack">years </span>
@@ -257,6 +258,49 @@ export const Output = ({
           </em>
         </li>
       </ul>
+    </>
+  );
+};
+
+export const Main = ({
+  results,
+  setResults,
+}: {
+  results: { days: string; months: string; years: string };
+  setResults: React.Dispatch<
+    SetStateAction<{ days: string; months: string; years: string }>
+  >;
+}) => {
+  return (
+    <>
+      <main className="flex max-w-screen-md flex-col rounded-t-2xl rounded-br-[6rem] rounded-bl-2xl bg-white px-6 md:px-10">
+        <Form setResults={setResults} />
+        <Output
+          days={results.days}
+          months={results.months}
+          years={results.years}
+        />
+      </main>
+    </>
+  );
+};
+
+export const Wrapper = ({ children }: { children: ReactNode }) => {
+  return (
+    <>
+      <div className="bg-offWhite font-custom md:text-custom flex h-full min-h-screen flex-col items-center justify-center font-normal">
+        {children}
+      </div>
+    </>
+  );
+};
+
+export const Container = ({ children }: { children: ReactNode }) => {
+  return (
+    <>
+      <div className="flex flex-1 flex-col items-center justify-center p-4">
+        {children}
+      </div>
     </>
   );
 };
