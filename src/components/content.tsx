@@ -1,21 +1,23 @@
 import arrow from "../assets/icon-arrow.svg";
-import {
-  useEffect,
-  useState,
-  type ReactNode,
-  type SetStateAction,
-} from "react";
+import { useState, type ReactNode, type SetStateAction } from "react";
 
 const Button = () => {
   return (
     <div className="absolute bottom-0 w-full">
       <div className="relative w-full">
         <button
-          type="submit"
+          aria-label="Submit"
           className="group bg-purple absolute -bottom-8 left-1/2 w-fit -translate-x-1/2 cursor-pointer overflow-hidden rounded-full p-4 transition-transform duration-300 md:right-0 md:-bottom-12 md:left-auto md:translate-x-0 md:p-6"
+          title="Submit"
+          type="submit"
         >
           <div className="absolute inset-0 z-0 rounded-full bg-black opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100" />
-          <img className="relative w-7 object-contain md:w-12" src={arrow} />
+          <img
+            alt="arrow"
+            aria-hidden="true"
+            className="relative w-7 object-contain md:w-12"
+            src={arrow}
+          />
         </button>
       </div>
     </div>
@@ -94,7 +96,7 @@ const Form = ({
     const error: Partial<{ day: string; month: string; year: string }> = {};
 
     if (values.day === "") {
-      error.day = "Cannot be empty";
+      error.day = "This field is required";
     } else if (values.day.length > 2) {
       error.day = "Must be one or two digits";
     } else if (+values.day < 1 || +values.day > 31) {
@@ -104,7 +106,7 @@ const Form = ({
     }
 
     if (values.month === "") {
-      error.month = "Cannot be empty";
+      error.month = "This field is required";
     } else if (values.month.length > 2) {
       error.month = "Must be one or two digits";
     } else if (+values.month < 1 || +values.month > 12) {
@@ -114,7 +116,7 @@ const Form = ({
     }
 
     if (values.year === "") {
-      error.year = "Cannot be empty";
+      error.year = "This field is required";
     } else if (values.year.length > 4) {
       error.year = "Must be four digits";
     } else if (+values.year > year) {
@@ -148,46 +150,46 @@ const Form = ({
 
   return (
     <form
-      className="border-b-lightGrey relative flex h-52 flex-col justify-center border-b"
       noValidate
+      className="border-b-lightGrey relative flex h-52 flex-col justify-center border-b md:h-60"
       onSubmit={onSubmit}
     >
-      <ul className="flex flex-row justify-between gap-5 md:w-10/12">
+      <ul className="flex flex-row justify-between gap-5 md:w-9/12 md:gap-6">
         <Input
+          error={errors.day}
+          label="Day"
+          placeholder="DD"
+          value={values.day}
           onChange={(e) =>
             setValues((prev) => ({ ...prev, day: e.target.value }))
           }
           setError={(value: string) =>
             setErrors((prev) => ({ ...prev, day: value }))
           }
-          error={errors.day}
-          value={values.day}
-          label="Day"
-          placeholder="DD"
         />
         <Input
+          error={errors.month}
+          label="Month"
+          placeholder="MM"
+          value={values.month}
           onChange={(e) =>
             setValues((prev) => ({ ...prev, month: e.target.value }))
           }
           setError={(value: string) =>
             setErrors((prev) => ({ ...prev, month: value }))
           }
-          error={errors.month}
-          value={values.month}
-          label="Month"
-          placeholder="MM"
         />
         <Input
+          error={errors.year}
+          label="Year"
+          placeholder="YYYY"
+          value={values.year}
           onChange={(e) =>
             setValues((prev) => ({ ...prev, year: e.target.value }))
           }
           setError={(value: string) =>
             setErrors((prev) => ({ ...prev, year: value }))
           }
-          error={errors.year}
-          value={values.year}
-          label="Year"
-          placeholder="YYYY"
         />
       </ul>
       <Button />
@@ -245,16 +247,14 @@ const Input = ({
           {label}
         </label>
         <input
-          value={value}
-          className={` ${error !== "" ? "outline-lightRed" : "outline-lightGrey focus:outline-purple"} text-offBlack placeholder:text-smokeyGrey md:text-custom flex w-full cursor-pointer rounded-md p-3 text-lg font-extrabold outline-1 duration-300 ease-in-out`}
+          className={` ${error !== "" ? "outline-lightRed" : "outline-lightGrey focus:outline-purple"} text-offBlack placeholder:text-smokeyGrey md:text-custom md: flex w-full cursor-pointer rounded-md p-3 text-lg font-extrabold outline-1 duration-300 ease-in-out md:py-2 md:pl-4`}
           onBlur={validate}
           onChange={onChange}
           placeholder={placeholder}
+          value={value}
         />
         <em
-          className={
-            "text-lightRed h-1 text-xs font-normal tracking-normal normal-case transition-colors duration-300 ease-in-out"
-          }
+          className={`${error !== "" ? "opacity-100" : "opacity-0"} text-lightRed h-4 text-xs font-normal tracking-normal normal-case transition-opacity duration-500 ease-in-out`}
         >
           {error}
         </em>
@@ -306,7 +306,7 @@ export const Main = ({
 }) => {
   return (
     <>
-      <main className="flex max-w-screen-md flex-col rounded-t-2xl rounded-br-[6rem] rounded-bl-2xl bg-white px-6 md:px-10">
+      <main className="flex max-w-screen-md flex-col rounded-t-2xl rounded-br-[6rem] rounded-bl-2xl bg-white px-6 md:rounded-t-2xl md:rounded-br-[8rem] md:rounded-bl-3xl md:px-10">
         <Form setResults={setResults} />
         <Output
           days={results.days}
